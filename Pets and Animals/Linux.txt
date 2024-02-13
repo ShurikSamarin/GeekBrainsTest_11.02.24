@@ -1,0 +1,344 @@
+root@Linux2:/home/alexander# ls
+
+'$'             copy         Docker               Documents   Pictures    seminar_4   snap        testdocker
+
+ 16             copy1        docker-compose.yml   Downloads   Public      seminar_5   stress.sh   update
+
+ apt-get        Desktop      Dockerfile           ls_txt      python.py   share       Templates   Videos
+
+ copied_files   dir_delete   docker_php           Music       Reports     shared      test        wp_site
+
+root@Linux2:/home/alexander# cat>Pets
+
+Dog
+
+Cat
+
+Hamster
+
+root@Linux2:/home/alexander# cat Pets
+
+Dog
+
+Cat
+
+Hamster
+
+root@Linux2:/home/alexander# cat>Pack_animals
+
+Horse
+
+Camel
+
+Donkey
+
+root@Linux2:/home/alexander# cat Pack_animals 
+
+Horse
+
+Camel
+
+Donkey
+
+oot@Linux2:/home/alexander# cat Pets Pack_animals > HumanFriends
+
+root@Linux2:/home/alexander# cat HumanFriends 
+
+Dog
+
+Cat
+
+Hamster
+
+Horse
+
+Camel
+
+Donkey
+
+root@Linux2:/home/alexander# ls
+
+'$'             copy         Docker               Documents      Music          Pictures    seminar_4   snap        testdocker
+
+ 16             copy1        docker-compose.yml   Downloads      Pack           Public      seminar_5   stress.sh   update
+
+ apt-get        Desktop      Dockerfile           HumanFriends   Pack_animals   python.py   share       Templates   Videos
+
+ copied_files   dir_delete   docker_php           ls_txt         Pets           Reports     shared      test        wp_site
+
+root@Linux2:/home/alexander# mkdir Animals
+
+root@Linux2:/home/alexander# mv HumanFriends Animals/HumanFriends
+
+root@Linux2:/home/alexander# cd Animals/
+
+root@Linux2:/home/alexander/Animals# ls
+
+HumanFriends
+
+root@Linux2:/home/alexander/Animals# cat HumanFriends 
+
+Dog
+
+Cat
+
+Hamster
+
+Horse
+
+Camel
+
+Donkey
+
+root@Linux2:/home/alexander/Animals# apt install mysql-server
+
+Reading package lists... Done
+
+Building dependency tree... Done
+
+Reading state information... Done
+
+mysql-server is already the newest version (8.0.35-0ubuntu0.22.04.1).
+
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+
+root@Linux2:/home/alexander/Animals# mysql
+
+mysql> show databases;
+
++--------------------+
+
+| Database           |
+
++--------------------+
+
+| gb                 |
+
+| information_schema |
+
+| mysql              |
+
+| performance_schema |
+
+| phpmyadmin         |
+
+| sys                |
+
++--------------------+
+
+6 rows in set (0,00 sec)
+
+mysql> exit
+
+Bye
+
+root@Linux:/etc/apt# apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+
+Reading package lists... Done
+
+Building dependency tree... Done
+
+Reading state information... Done
+
+lsb-release is already the newest version (11.1.0ubuntu4).
+
+lsb-release set to manually installed.
+
+ubuntu-keyring is already the newest version (2021.03.26).
+
+ubuntu-keyring set to manually installed.
+
+ca-certificates is already the newest version (20230311ubuntu0.22.04.1).
+
+ca-certificates set to manually installed.
+
+The following packages were automatically installed and are no longer required:
+
+  libnginx-mod-http-geoip2 libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libnginx-mod-stream-geoip2
+
+  nginx-common nginx-core
+
+Use 'sudo apt autoremove' to remove them.
+
+The following NEW packages will be installed:
+
+  curl gnupg2
+
+0 upgraded, 2 newly installed, 0 to remove and 4 not upgraded.
+
+Need to get 200 kB of archives.
+
+After this operation, 506 kB of additional disk space will be used.
+
+Do you want to continue? [Y/n] y
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu jammy-updates/main amd64 curl amd64 7.81.0-1ubuntu1.14 [194 kB]
+
+Get:2 http://ru.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 gnupg2 all 2.2.27-3ubuntu2.1 [5,548 B]
+
+Fetched 200 kB in 0s (1,422 kB/s)
+
+Selecting previously unselected package curl.
+
+(Reading database ... 239554 files and directories currently installed.)
+
+Preparing to unpack .../curl_7.81.0-1ubuntu1.14_amd64.deb ...
+
+Unpacking curl (7.81.0-1ubuntu1.14) ...
+
+Selecting previously unselected package gnupg2.
+
+Preparing to unpack .../gnupg2_2.2.27-3ubuntu2.1_all.deb ...
+
+Unpacking gnupg2 (2.2.27-3ubuntu2.1) ...
+
+Setting up gnupg2 (2.2.27-3ubuntu2.1) ...
+
+Setting up curl (7.81.0-1ubuntu1.14) ...
+
+Processing triggers for man-db (2.10.2-1) ...
+
+root@Linux:/etc/apt# curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+
+    | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+100  1561  100  1561    0     0   5558      0 --:--:-- --:--:-- --:--:--  5575
+
+root@Linux:/etc/apt# gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg
+
+pub   rsa2048 2011-08-19 [SC] [expires: 2024-06-14]
+
+      573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+
+uid                      nginx signing key <signing-key@nginx.com>
+
+oot@Linux:/etc/apt# echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
+
+    | sudo tee /etc/apt/preferences.d/99nginx
+
+Package: *
+
+Pin: origin nginx.org
+
+Pin: release o=nginx
+
+Pin-Priority: 900
+
+root@Linux:/etc/apt# apt install nginx
+
+Reading package lists... Done
+
+Building dependency tree... Done
+
+Reading state information... Done
+
+The following packages will be REMOVED:
+
+  libnginx-mod-http-geoip2 libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libnginx-mod-stream-geoip2
+
+  nginx-common nginx-core
+
+The following NEW packages will be installed:
+
+  nginx
+
+0 upgraded, 1 newly installed, 8 to remove and 4 not upgraded.
+
+Need to get 1,012 kB of archives.
+
+After this operation, 938 kB of additional disk space will be used.
+
+Do you want to continue? [Y/n] y
+
+Get:1 http://nginx.org/packages/ubuntu jammy/nginx amd64 nginx amd64 1.24.0-1~jammy [1,012 kB]
+
+Fetched 1,012 kB in 1s (1,282 kB/s)
+
+(Reading database ... 239567 files and directories currently installed.)
+
+Removing nginx-core (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-http-geoip2 (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-http-image-filter (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-http-xslt-filter (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-mail (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-stream-geoip2 (1.18.0-6ubuntu14.4) ...
+
+Removing libnginx-mod-stream (1.18.0-6ubuntu14.4) ...
+
+Removing nginx-common (1.18.0-6ubuntu14.4) ...
+
+Selecting previously unselected package nginx.
+
+(Reading database ... 239508 files and directories currently installed.)
+
+Preparing to unpack .../nginx_1.24.0-1~jammy_amd64.deb ...
+
+----------------------------------------------------------------------
+
+
+
+Thanks for using nginx!
+
+
+
+Please find the official documentation for nginx here:
+
+* https://nginx.org/en/docs/
+
+
+
+Please subscribe to nginx-announce mailing list to get
+
+the most important news about nginx:
+
+* https://nginx.org/en/support.html
+
+
+
+Commercial subscriptions for nginx are available on:
+
+* https://nginx.com/products/
+
+
+
+----------------------------------------------------------------------
+
+Unpacking nginx (1.24.0-1~jammy) ...
+
+Setting up nginx (1.24.0-1~jammy) ...
+
+Installing new version of config file /etc/default/nginx ...
+
+Installing new version of config file /etc/init.d/nginx ...
+
+Installing new version of config file /etc/logrotate.d/nginx ...
+
+Installing new version of config file /etc/nginx/fastcgi_params ...
+
+Installing new version of config file /etc/nginx/mime.types ...
+
+Installing new version of config file /etc/nginx/nginx.conf ...
+
+Processing triggers for man-db (2.10.2-1) ...
+
+root@Linux:/etc/apt# dpkg -r nginx
+
+(Reading database ... 239532 files and directories currently installed.)
+
+Removing nginx (1.24.0-1~jammy) ...
+
+Processing triggers for man-db (2.10.2-1) ...
+
+
+
+Бурцев А.Б. 13.02.2024 user id 6053702
+

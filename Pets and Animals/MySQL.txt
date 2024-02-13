@@ -1,0 +1,429 @@
+root@Linux2:/home/alexander# mysql
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+
+Your MySQL connection id is 12
+
+Server version: 8.0.35-0ubuntu0.22.04.1 (Ubuntu)
+
+
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+
+affiliates. Other names may be trademarks of their respective
+
+owners.
+
+
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+
+mysql> show databases;
+
++--------------------+
+
+| Database           |
+
++--------------------+
+
+| gb                 |
+
+| information_schema |
+
+| mysql              |
+
+| performance_schema |
+
+| phpmyadmin         |
+
+| sys                |
+
++--------------------+
+
+6 rows in set (0,00 sec)
+
+mysql> CREATE DATABASE HumanFriends;
+
+Query OK, 1 row affected (0,00 sec)
+
+mysql> show databases;
+
++--------------------+
+
+| Database           |
+
++--------------------+
+
+| HumanFriends       |
+
+| gb                 |
+
+| information_schema |
+
+| mysql              |
+
+| performance_schema |
+
+| phpmyadmin         |
+
+| sys                |
+
++--------------------+
+
+7 rows in set (0,00 sec)
+
+mysql> use HumanFriends;
+
+Database changed
+
+mysql> CREATE TABLE Pets(id INT, Name VARCHAR(100), Type VARCHAR(100), BirthDate VARCHAR(100), Commands VARCHAR(100));
+
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> CREATE TABLE PackAnimals(id INT, Name VARCHAR(100), Type VARCHAR(100), BirthDate VARCHAR(100), Commands VARCHAR(100));
+
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> show tables;
+
++------------------------+
+
+| Tables_in_HumanFriends |
+
++------------------------+
+
+| PackAnimals            |
+
+| Pets                   |
+
++------------------------+
+
+2 rows in set (0,00 sec)
+
+mysql> INSERT INTO Pets VALUES (1, 'Buddy', 'Dog', '22-10-22', 'Sit, bark, prone'),(2, 'Spot', 'Cat', '23-12-23', 'Meou'),(3, 'Speedy', 'Hamster', '24-11-23', 'Roll, stop'); 
+
+Query OK, 3 rows affected (0,00 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Pets;
+
++------+--------+---------+-----------+------------------+
+
+| id   | Name   | Type    | BirthDate | Commands         |
+
++------+--------+---------+-----------+------------------+
+
+|    1 | Buddy  | Dog     | 22-10-22  | Sit, bark, prone |
+
+|    2 | Spot   | Cat     | 23-12-23  | Meou             |
+
+|    3 | Speedy | Hamster | 24-11-23  | Roll, stop       |
+
++------+--------+---------+-----------+------------------+
+
+3 rows in set (0,00 sec)
+
+INSERT INTO PackAnimals VALUES (1, 'Peggy', 'Horse', '20-10-20', 'Walk, run, stop'),(2, 'Hurry', 'Donkey', '13-12-13', 'Woo'),(3, 'Sandy', 'Camel', '04-01-20', 'Go, lie, stand'),(4, 'Pedro', 'Donkey', '14-01-14', 'Woo'),(5, 'Woody', 'Horse', '02-02-18', 'Walk, run, stop'),(6, 'Goody', 'Camel', '24-01-22', 'Go, lie, stand'); 
+
+Query OK, 6 rows affected (0,01 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PackAnimals;
+
++------+-------+--------+-----------+-----------------+
+
+| id   | Name  | Type   | BirthDate | Commands        |
+
++------+-------+--------+-----------+-----------------+
+
+|    1 | Peggy | Horse  | 20-10-20  | Walk, run, stop |
+
+|    2 | Hurry | Donkey | 13-12-13  | Woo             |
+
+|    3 | Sandy | Camel  | 04-01-20  | Go, lie, stand  |
+
+|    4 | Pedro | Donkey | 14-01-14  | Woo             |
+
+|    5 | Woody | Horse  | 02-02-18  | Walk, run, stop |
+
+|    6 | Goody | Camel  | 24-01-22  | Go, lie, stand  |
+
++------+-------+--------+-----------+-----------------+
+
+6 rows in set (0,00 sec)
+
+mysql> CREATE TABLE HorseDonkeys LIKE PackAnimals;
+
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> INSERT INTO HorseDonkeys SELECT * FROM PackAnimals where Type='Horse';
+
+Query OK, 2 rows affected (0,01 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO HorseDonkeys SELECT * FROM PackAnimals where Type='Donkey';
+
+Query OK, 2 rows affected (0,01 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM HorseDonkeys;
+
++------+-------+--------+-----------+-----------------+
+
+| id   | Name  | Type   | BirthDate | Commands        |
+
++------+-------+--------+-----------+-----------------+
+
+|    1 | Peggy | Horse  | 20-10-20  | Walk, run, stop |
+
+|    5 | Woody | Horse  | 02-02-18  | Walk, run, stop |
+
+|    2 | Hurry | Donkey | 13-12-13  | Woo             |
+
+|    4 | Pedro | Donkey | 14-01-14  | Woo             |
+
++------+-------+--------+-----------+-----------------+
+
+4 rows in set (0,01 sec)
+
+mysql> ALTER TABLE Pets
+
+    -> ADD Age INT;
+
+Query OK, 0 rows affected (0,02 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Pets
+
+    -> MODIFY COLUMN BirthDate Date; 
+
+Query OK, 3 rows affected (0,02 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Pets;
+
++------+--------+---------+------------+------------------+------+
+
+| id   | Name   | Type    | BirthDate  | Commands         | Age  |
+
++------+--------+---------+------------+------------------+------+
+
+|    1 | Buddy  | Dog     | 2022-10-22 | Sit, bark, prone | NULL |
+
+|    2 | Spot   | Cat     | 2023-12-23 | Meou             | NULL |
+
+|    3 | Speedy | Hamster | 2024-11-23 | Roll, stop       | NULL |
+
++------+--------+---------+------------+------------------+------+
+
+3 rows in set (0,00 sec)
+
+mysql> Update Pets SET Birthdate = '2020-11-23' WHERE id = 3;
+
+Query OK, 1 row affected (0,00 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> show tables;
+
++------------------------+
+
+| Tables_in_HumanFriends |
+
++------------------------+
+
+| AnimalAge              |
+
+| HorseDonkeys           |
+
+| PackAnimals            |
+
+| Pets                   |
+
++------------------------+
+
+4 rows in set (0,00 sec)
+
+mysql> ALTER TABLE PackAnimals
+
+    -> ADD Age INT;
+
+Query OK, 0 rows affected (0,28 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+
+ysql> ALTER TABLE PackAnimals
+
+    -> MODIFY COLUMN BirthDate Date;
+
+Query OK, 6 rows affected (0,10 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PackAnimals;
+
++------+-------+--------+------------+-----------------+------+
+
+| id   | Name  | Type   | BirthDate  | Commands        | Age  |
+
++------+-------+--------+------------+-----------------+------+
+
+|    1 | Peggy | Horse  | 2020-10-20 | Walk, run, stop | NULL |
+
+|    2 | Hurry | Donkey | 2013-12-13 | Woo             | NULL |
+
+|    3 | Sandy | Camel  | 2004-01-20 | Go, lie, stand  | NULL |
+
+|    4 | Pedro | Donkey | 2014-01-14 | Woo             | NULL |
+
+|    5 | Woody | Horse  | 2002-02-18 | Walk, run, stop | NULL |
+
+|    6 | Goody | Camel  | 2024-01-22 | Go, lie, stand  | NULL |
+
++------+-------+--------+------------+-----------------+------+
+
+6 rows in set (0,00 sec)
+
+mysql> Update PackAnimals SET AGE = 12*(CURRENT_DATE - BirthDate)/10000;
+
+Query OK, 6 rows affected (0,00 sec)
+
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM PackAnimals;
+
++------+-------+--------+------------+-----------------+------+
+
+| id   | Name  | Type   | BirthDate  | Commands        | Age  |
+
++------+-------+--------+------------+-----------------+------+
+
+|    1 | Peggy | Horse  | 2020-10-20 | Walk, run, stop |   47 |
+
+|    2 | Hurry | Donkey | 2013-12-13 | Woo             |  131 |
+
+|    3 | Sandy | Camel  | 2004-01-20 | Go, lie, stand  |  240 |
+
+|    4 | Pedro | Donkey | 2014-01-14 | Woo             |  120 |
+
+|    5 | Woody | Horse  | 2002-02-18 | Walk, run, stop |  264 |
+
+|    6 | Goody | Camel  | 2024-01-22 | Go, lie, stand  |    0 |
+
++------+-------+--------+------------+-----------------+------+
+
+6 rows in set (0,00 sec)
+
+mysql> Update PackAnimals SET Birthdate = '2021-10-20' WHERE id = 1;
+
+Query OK, 1 row affected (0,01 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> Update PackAnimals SET AGE = 12*(CURRENT_DATE - BirthDate)/10000;
+
+Query OK, 1 row affected (0,02 sec)
+
+Rows matched: 6  Changed: 1  Warnings: 0
+
+mysql> Drop table AnimalAge;
+
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> CREATE TABLE AnimalAge (id INT, Name VARCHAR(100), Type VARCHAR(100), BirthDate DATE, Commands VARCHAR(100), Age INT);
+
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> INSERT INTO AnimalAge (id, Name, Type, BirthDate, Commands, Age)
+
+    -> SELECT id, Name, Type, BirthDate, Commands, Age
+
+    -> FROM Pets
+
+    -> WHERE Age BETWEEN 12 AND 36;
+
+Query OK, 1 row affected (0,01 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO AnimalAge (id, Name, Type, BirthDate, Commands, Age) SELECT id, Name, Type, BirthDate, Commands, Age FROM PackAnimals WHERE Age BETWEEN 12 AND 36;
+
+Query OK, 1 row affected (0,00 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> select * from AnimalAge;
+
++------+-------+-------+------------+------------------+------+
+
+| id   | Name  | Type  | BirthDate  | Commands         | Age  |
+
++------+-------+-------+------------+------------------+------+
+
+|    1 | Buddy | Dog   | 2022-10-22 | Sit, bark, prone |   23 |
+
+|    1 | Peggy | Horse | 2021-10-20 | Walk, run, stop  |   35 |
+
++------+-------+-------+------------+------------------+------+
+
+2 rows in set (0,00 sec)
+
+mysql> CREATE TABLE AnimalAll (id INT, Name VARCHAR(100), Type VARCHAR(100), BirthDate DATE, Commands VARCHAR(100), Age INT, Origin VARCHAR(100));\
+
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> INSERT INTO AnimalAll (id, Name, Type, BirthDate, Commands, Age, Origin) SELECT id, Name, Type, BirthDate, Commands, Age, 'Pets' FROM Pets;
+
+Query OK, 3 rows affected (0,01 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO AnimalAll (id, Name, Type, BirthDate, Commands, Age, Origin) SELECT id, Name, Type, BirthDate, Commands, Age, 'PQuery OK, 6 rows affected (0,01 sec)
+
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM AnimalAll;
+
++------+--------+---------+------------+------------------+------+-------------+
+
+| id   | Name   | Type    | BirthDate  | Commands         | Age  | Origin      |
+
++------+--------+---------+------------+------------------+------+-------------+
+
+|    1 | Buddy  | Dog     | 2022-10-22 | Sit, bark, prone |   23 | Pets        |
+
+|    2 | Spot   | Cat     | 2023-12-23 | Meou             |   11 | Pets        |
+
+|    3 | Speedy | Hamster | 2020-11-23 | Roll, stop       |   47 | Pets        |
+
+|    1 | Peggy  | Horse   | 2021-10-20 | Walk, run, stop  |   35 | PackAnimals |
+
+|    2 | Hurry  | Donkey  | 2013-12-13 | Woo              |  131 | PackAnimals |
+
+|    3 | Sandy  | Camel   | 2004-01-20 | Go, lie, stand   |  240 | PackAnimals |
+
+|    4 | Pedro  | Donkey  | 2014-01-14 | Woo              |  120 | PackAnimals |
+
+|    5 | Woody  | Horse   | 2002-02-18 | Walk, run, stop  |  264 | PackAnimals |
+
+|    6 | Goody  | Camel   | 2024-01-22 | Go, lie, stand   |    0 | PackAnimals |
+
++------+--------+---------+------------+------------------+------+-------------+
+
+9 rows in set (0,00 sec)
+
+
+
+Бурцев А.Б. 13.02.2024 user id 6053702
