@@ -1,10 +1,14 @@
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 class Animal {
     String name;
-    String birthDate;
-    List<String> commands;
+    private String birthDate;
+    private List<String> commands;
 
     public Animal(String name, String birthDate) {
         this.name = name;
@@ -21,5 +25,9 @@ class Animal {
         for (String command : commands) {
             System.out.println(command);
         }
+    }
+
+    public String getBirthDate() {
+        return birthDate;
     }
 }
